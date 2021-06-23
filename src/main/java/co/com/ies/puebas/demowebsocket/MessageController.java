@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api")
 public class MessageController {
 
 	private final BinarySocketHandler binaryWebSocketHandler;
@@ -21,7 +20,12 @@ public class MessageController {
 		this.textSocketHandler = textSocketHandler;
 	}
 
-	@PostMapping(path = "/prueba", produces = "application/json")
+	@RequestMapping("/")
+	public String home() {
+		return "index";
+	}
+
+	@PostMapping(path = "api/prueba", produces = "application/json")
 	public ResponseEntity<Objeto> getBook(@RequestBody String mensaje) {
 		String repuesta = "Mensaje Enviado: " + mensaje;
 		Objeto payload = new Objeto(repuesta);
