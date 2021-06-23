@@ -5,6 +5,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script >
         var ws;
+        var URLactual = window.location.host;
         function setConnected(connected) {
             $("#connect").prop("disabled", connected);
             $("#disconnect").prop("disabled", !connected);
@@ -18,7 +19,7 @@
         }
 
         function connect() {
-            ws = new WebSocket('ws://localhost:8080/name2');
+            ws = new WebSocket('ws://'+URLactual+'/name2');
             ws.onmessage = function(data){
                 showGreeting(data.data);
             }
