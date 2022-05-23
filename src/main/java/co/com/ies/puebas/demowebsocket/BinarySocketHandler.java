@@ -19,7 +19,7 @@ public class BinarySocketHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("session = " + session);
+        System.out.println("afterConnectionEstablished::session = " + session);
 
         webSocketSessionList.add(session);
     }
@@ -27,8 +27,8 @@ public class BinarySocketHandler extends BinaryWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        System.out.println("status = " + status);
-        System.out.println("session = " + session);
+        System.out.println("afterConnectionClosed::status = " + status);
+        System.out.println("afterConnectionClosed::session = " + session);
         webSocketSessionList.remove(session);
     }
 
@@ -38,6 +38,7 @@ public class BinarySocketHandler extends BinaryWebSocketHandler {
     }
 
     public void sendBroadcast(byte[] bytes) {
+        System.out.println(bytes);
         webSocketSessionList.forEach(webSocketSession -> {
             try {
 

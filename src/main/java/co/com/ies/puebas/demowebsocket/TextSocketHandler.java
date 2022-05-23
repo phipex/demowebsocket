@@ -18,15 +18,15 @@ public class TextSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("session = " + session);
+        System.out.println("afterConnectionEstablished::session = " + session);
         webSocketSessionList.add(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
-        System.out.println("status = " + status);
-        System.out.println("session = " + session);
+        System.out.println("afterConnectionClosed::status = " + status);
+        System.out.println("afterConnectionClosed::session = " + session);
         webSocketSessionList.remove(session);
     }
 
@@ -36,13 +36,32 @@ public class TextSocketHandler extends TextWebSocketHandler {
     }
 
     public void sendBroadcast(byte[] bytes) {
+        System.out.println(bytes);
         webSocketSessionList.forEach(webSocketSession -> {
             try {
-                System.out.println("session = " + webSocketSession);
+                System.out.println("sendBroadcast::session = " + webSocketSession);
                 webSocketSession.sendMessage(new TextMessage(bytes));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
+
+    @Override
+	public void handleTextMessage(WebSocketSession session, TextMessage message)
+			throws InterruptedException, IOException {
+
+		String payload = message.getPayload();
+		webSocketSessionList.forEach(webSocketSession -> {
+            if(!webSocketSession.getId().equals(session.getId())){
+                try {
+                    
+                    System.out.println("sendBroadcast::session = " + webSocketSession);
+                    webSocketSession.sendMessage(new TextMessage(payload.getBytes()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+	}
 }

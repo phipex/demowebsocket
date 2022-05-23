@@ -35,7 +35,9 @@
         }
 
         function sendName() {
-            var data = JSON.stringify({'name': $("#name").val()})
+            let msg = {'name': $("#name").val()};
+            console.log(msg)
+            var data = JSON.stringify(msg)
             ws.send(data);
         }
 

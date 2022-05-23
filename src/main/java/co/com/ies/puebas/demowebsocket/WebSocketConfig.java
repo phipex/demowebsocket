@@ -10,16 +10,16 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
 
-    private final BinarySocketHandler webSocketHandler;
+    private final BinarySocketHandler binarySocketHandler;
 
     private final TextSocketHandler textSocketHandler;
-    public WebSocketConfig(TextSocketHandler textSocketHandler) {
+    public WebSocketConfig(TextSocketHandler textSocketHandler, BinarySocketHandler binarySocketHandler) {
         this.textSocketHandler = textSocketHandler;
-        webSocketHandler = new BinarySocketHandler();
+        this.binarySocketHandler = binarySocketHandler;
     }
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/name");
+        registry.addHandler(binarySocketHandler, "/name");
         registry.addHandler(textSocketHandler, "/name2");
 
     }
